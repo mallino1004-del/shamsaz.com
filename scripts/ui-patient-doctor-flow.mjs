@@ -1,0 +1,121 @@
+import 'dotenv/config';
+import { Pool } from 'pg';
+import { chromium } from 'playwright-core';
+import { randomBytes } from 'node:crypto';
+import { spawn, execFileSync } from 'node:child_process';
+import { createServer } from 'node:net';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+
+const source=new URL(process.env.DATABASE_URL||'');
+assert.ok(['localhost','127.0.0.1','[::1]'].includes(source.hostname),'The patient/doctor audit requires local PostgreSQL.');
+const live=process.env.LIVE_BOOKING_QA==='true';
+const databaseName=`shamsaz_test_${randomBytes(10).toString('hex')}`;
+assert.match(databaseName,/^shamsaz_test_[a-f0-9]{20}$/);
+const target=new URL(source);if(!live)target.pathname=`/${databaseName}`;
+const admin=new Pool({connectionString:source.toString()});
+let base=process.env.DIRECTORY_TEST_ORIGIN||'http://localhost:3001';
+assert.ok(['localhost','127.0.0.1','[::1]'].includes(new URL(base).hostname));
+let created=false,service,browser,fixture;
+const suffix=randomBytes(5).toString('hex'),patientEmail=`booking-check-${suffix}@example.test`,patientPassword=`QA-${randomBytes(18).toString('hex')}!`;
+const patientPhone=`0912${String(parseInt(suffix.slice(0,5),16)).padStart(7,'0')}`;
+const patientName='بیمار بررسی رزرو',reason=`بررسی آزمایشی مسیر بیمار و پزشک؛ ${suffix}`;
+const directory=`.local/ui-qa/patient-doctor-flow/${live?'live':'isolated'}`;
+mkdirSync(directory,{recursive:true});
+const executablePath=process.env.AUTH_TEST_BROWSER||['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
+assert.ok(executablePath);
+let physicianPassword=process.env.DEMO_PASSWORD;
+try {
+ if(!live){
+  execFileSync(process.execPath,['node_modules/vite/bin/vite.js','build'],{stdio:'pipe',windowsHide:true});
+  await admin.query(`CREATE DATABASE "${databaseName}"`);created=true;
+  const ports=createServer();await new Promise(resolve=>ports.listen(0,'127.0.0.1',resolve));
+  const port=ports.address().port;await new Promise(resolve=>ports.close(resolve));base=`http://localhost:${port}`;
+  physicianPassword=randomBytes(24).toString('hex');
+  const env={...process.env,NODE_ENV:'test',DATABASE_URL:target.toString(),PORT:String(port),APP_ORIGIN:base,ENABLE_DEMO_SEED:'true',DEMO_PASSWORD:physicianPassword};
+  execFileSync(process.execPath,['--input-type=module','-e',"const {initializeDatabase,db}=await import('./server/db/index.ts');await initializeDatabase();await db.end();"],{env,stdio:'pipe',windowsHide:true});
+  service=spawn(process.execPath,['scripts/ui-server.ts'],{env:{...env,ENABLE_DEMO_SEED:'false'},stdio:['ignore','pipe','pipe'],windowsHide:true});
+  service.stdout.resume();service.stderr.resume();
+ }
+ let ready=false;for(let i=0;i<100;i++){if(await fetch(`${base}/api/health`).then(r=>r.ok).catch(()=>false)){ready=true;break;}await new Promise(resolve=>setTimeout(resolve,100));}
+ assert.ok(ready,'Local site must be running');
+ fixture=new Pool({connectionString:target.toString()});
+ browser=await chromium.launch({headless:true,executablePath});
+ const errors=[];
+ const patientContext=await browser.newContext({viewport:{width:1366,height:900},timezoneId:'Asia/Tehran'});
+ const patient=await patientContext.newPage();patient.on('pageerror',e=>errors.push(e.message));
+ await patient.goto(`${base}/#register`);
+ await patient.getByRole('button',{name:'ادامه',exact:true}).click();
+ await patient.locator('[name="firstName"]').fill('بیمار');await patient.locator('[name="lastName"]').fill('بررسی رزرو');
+ await patient.locator('[name="nationalId"]').fill('9876543210');
+ await patient.getByRole('combobox',{name:'سال تولد'}).selectOption('1370');
+ await patient.getByRole('combobox',{name:'ماه تولد'}).selectOption('1');
+ await patient.getByRole('combobox',{name:'روز تولد'}).selectOption('15');
+ await patient.locator('[name="phone"]').fill(patientPhone);
+ await patient.getByRole('button',{name:'ادامه',exact:true}).click();
+ await patient.locator('[name="email"]').fill(patientEmail);await patient.locator('[name="password"]').fill(patientPassword);
+ await patient.locator('[name="passwordConfirmation"]').fill(patientPassword);await patient.getByRole('checkbox').check();
+ const registered=patient.waitForResponse(r=>r.url().endsWith('/api/auth/register')&&r.request().method()==='POST');
+ await patient.getByRole('button',{name:'ساخت حساب شمساز',exact:true}).click();
+ const registration=await registered;assert.equal(registration.status(),201);const auth=await registration.json();assert.equal(auth.user.role,'patient');
+ await patient.waitForURL('**/#dashboard');
+ await patient.getByRole('button',{name:'خروج از حساب',exact:true}).click();await patient.waitForURL('**/#home');
+ await patient.goto(`${base}/#login`);await patient.locator('[name="identifier"]').fill(patientEmail);await patient.locator('[name="password"]').fill(patientPassword);
+ await patient.locator('form button[type="submit"]').click();await patient.waitForURL('**/#dashboard');
+ await patient.goto(`${base}/#doctors`);
+ const publicDirectory=await patient.evaluate(async()=>await(await fetch('/api/practitioners')).json());
+ const selected=publicDirectory.practitioners.find(p=>p.accountId==='demo-doctor');
+ assert.ok(selected,'The registered test physician must appear in the public directory with the same account');
+ const card=patient.locator('main article').filter({has:patient.getByRole('heading',{name:selected.displayName,exact:true})});
+ await card.getByRole('button',{name:'رزرو ویزیت',exact:true}).click();
+ const modal=patient.getByRole('dialog');await modal.locator('[name="patientName"]').waitFor();
+ assert.equal(await modal.locator('[name="patientName"]').inputValue(),patientName);
+ const preferredDate=new Date(Date.now()+3*86400000).toISOString().slice(0,10);
+ await modal.locator('[name="preferredDate"]').fill(preferredDate);await modal.locator('[name="preferredTime"]').fill('17:20');
+ await modal.locator('[name="reason"]').fill(reason);await modal.locator('[name="consent"]').check();
+ const booked=patient.waitForResponse(r=>r.url().includes('/visit-requests')&&r.request().method()==='POST');
+ await modal.locator('form button[type="submit"]').click();
+ const response=await booked;assert.equal(response.status(),201);const {visitRequest}=await response.json();
+ assert.equal(visitRequest.practitionerId,selected.id);assert.equal(visitRequest.patientId,auth.user.id);assert.equal(visitRequest.status,'pending');
+ await modal.getByText(visitRequest.reference,{exact:true}).waitFor();await patient.screenshot({path:`${directory}/patient-receipt.png`});
+ await modal.getByRole('button',{name:'مشاهدهٔ درخواست‌های من',exact:true}).click();await patient.waitForURL('**/#appointments');
+ const patientRow=patient.locator(`[data-visit-request-id="${visitRequest.id}"]`);await patientRow.waitFor();
+ await patient.reload();await patientRow.waitFor();
+ const physicianContext=await browser.newContext({viewport:{width:1366,height:900},timezoneId:'Asia/Tehran'});
+ const physician=await physicianContext.newPage();physician.on('pageerror',e=>errors.push(e.message));
+ await physician.goto(`${base}/#login`);await physician.locator('[name="identifier"]').fill('doctor@shamsaz.local');await physician.locator('[name="password"]').fill(physicianPassword);
+ await physician.locator('form button[type="submit"]').click();await physician.waitForURL('**/#dashboard');
+ await physician.goto(`${base}/#appointments`);
+ const queue=physician.getByRole('region',{name:'درخواست‌های ویزیت بیماران',exact:true});
+ const physicianRow=queue.locator(`[data-visit-request-id="${visitRequest.id}"]`);await physicianRow.waitFor();
+ await physicianRow.getByRole('heading',{name:patientName,exact:true}).waitFor();
+ assert.ok((await physicianRow.innerText()).includes(visitRequest.reference));assert.ok((await physicianRow.innerText()).includes(reason));
+ for(const width of [320,360,768,1366]){await physician.setViewportSize({width,height:900});assert.equal(await physician.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Physician queue overflow ${width}`);}
+ await physician.screenshot({path:`${directory}/physician-pending.png`});
+ if(!live){
+  const administrator=await browser.newContext();
+  const login=await administrator.request.post(`${base}/api/auth/login`,{data:{email:'admin@shamsaz.local',password:physicianPassword}});assert.equal(login.status(),200);
+  const administratorAuth=await login.json(), otherEmail=`other-${suffix}@example.test`;
+  const other=await administrator.request.post(`${base}/api/organization/staff`,{headers:{'x-csrf-token':administratorAuth.csrfToken},data:{email:otherEmail,displayName:'پزشک دیگر آزمون',role:'doctor',password:patientPassword,specialty:'تخصص آزمایشی',licenseNumber:`TEST-${suffix}`}});assert.equal(other.status(),201);
+  const outsider=await browser.newContext();const outsiderLogin=await outsider.request.post(`${base}/api/auth/login`,{data:{email:otherEmail,password:patientPassword}});assert.equal(outsiderLogin.status(),200);
+  const otherRequests=await(await outsider.request.get(`${base}/api/visit-requests`)).json();assert.equal(otherRequests.visitRequests.some(r=>r.id===visitRequest.id),false,'Other doctors cannot read this reservation');
+  const outsiderAuth=await outsiderLogin.json();const wrongDecision=await outsider.request.patch(`${base}/api/visit-requests/${visitRequest.id}`,{headers:{'x-csrf-token':outsiderAuth.csrfToken},data:{status:'confirmed'}});assert.equal(wrongDecision.status(),404);
+  await outsider.close();await administrator.close();
+ }
+ await physicianRow.getByRole('button',{name:'تأیید ویزیت',exact:true}).click();
+ const reviewed=physician.waitForResponse(r=>r.url().endsWith(`/visit-requests/${visitRequest.id}`)&&r.request().method()==='PATCH');
+ await physicianRow.getByRole('button',{name:'ثبت تأیید ویزیت',exact:true}).click();assert.equal((await reviewed).status(),200);
+ await queue.getByRole('combobox',{name:'فیلتر وضعیت درخواست‌های بیماران',exact:true}).selectOption('all');await physicianRow.waitFor();await physicianRow.getByText('تأییدشده',{exact:true}).waitFor();
+ await physician.reload();await queue.getByRole('combobox',{name:'فیلتر وضعیت درخواست‌های بیماران',exact:true}).selectOption('all');await physicianRow.waitFor();
+ await patient.reload();await patientRow.waitFor();await patientRow.getByText('تأییدشده',{exact:true}).waitFor();await patient.screenshot({path:`${directory}/patient-confirmed.png`});
+ const row=(await fixture.query('SELECT r.*,p.account_id FROM public_visit_requests r JOIN public_practitioners p ON p.id=r.practitioner_id WHERE r.id=$1',[visitRequest.id])).rows[0];
+ assert.equal(row.patient_id,auth.user.id);assert.equal(row.account_id,'demo-doctor');assert.equal(row.status,'confirmed');assert.equal(row.reviewed_by,'demo-doctor');
+ assert.deepEqual(errors,[]);
+ const report={mode:live?'live-local':'isolated',patientEmail,patientId:auth.user.id,patientName,practitionerName:selected.displayName,practitionerId:selected.id,doctorAccountId:'demo-doctor',reference:visitRequest.reference,preferredDate,preferredTime:'17:20',status:row.status,reviewedBy:row.reviewed_by,verifiedAt:new Date().toISOString(),screenshots:directory};
+ writeFileSync(`${directory}/report.json`,JSON.stringify(report,null,2)+'\n');
+ console.log(JSON.stringify(report));
+ console.log('Patient/doctor browser audit passed: complete patient signup, logout/login, selected member physician, persisted request, same physician queue, scoped ownership, physician confirmation and patient status after refresh.');
+}finally{
+ await browser?.close();if(service&&service.exitCode===null){service.kill();await new Promise(resolve=>service.once('exit',resolve));}
+ await fixture?.end();if(created)await admin.query(`DROP DATABASE "${databaseName}" WITH (FORCE)`);await admin.end();
+}

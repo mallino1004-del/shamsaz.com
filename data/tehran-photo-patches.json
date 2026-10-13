@@ -1,0 +1,52 @@
+[
+  {
+    "id": "tehran-cheraghi",
+    "imageSourceUrl": "https://dr-fcheraghi.com/wp-content/uploads/2024/10/dr-1.webp",
+    "imageSourcePageUrl": "https://dr-fcheraghi.com/"
+  },
+  {
+    "id": "tehran-zendedel",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/12059910?p=thumb",
+    "imageSourcePageUrl": "https://patient.p24cloud.ir/dr/دکتر-هدی-زنده-دل-1/"
+  },
+  {
+    "id": "tehran-arab",
+    "imageSourceUrl": "https://admapi.boghrat.com/boghratsite/document/Thumbnail/LoadThumb/230c3753-c2bf-4edb-bd30-b7f677805392.png",
+    "imageSourcePageUrl": "https://boghrat.com/dr/maliheh-arab"
+  },
+  {
+    "id": "tehran-mohammadian-amiri",
+    "imageSourceUrl": "https://axon.me/_ipx/f_webp,q_75,fit_cover,s_80x80/https://axon.me/services/api/file-service/hcpfile/e4549f5e-adda-474e-9be6-fe59d95de0e6/thumbnail/80x80.png",
+    "imageSourcePageUrl": "https://axon.me/hcps/93411-mahdis-mohammadian-amiri/"
+  },
+  {
+    "id": "tehran-mousavi",
+    "imageSourceUrl": "https://axon.me/_ipx/f_webp,q_75,fit_cover,s_80x80/https://axon.me/services/api/file-service/hcpfile/fc833c0c-472f-44a7-a147-55e2fe05fc2f/thumbnail/80x80.png",
+    "imageSourcePageUrl": "https://axon.me/hcps/22420-azam-al-sadat-mousavi/"
+  },
+  {
+    "id": "tehran-yousefnejad",
+    "imageSourceUrl": "https://axon.me/_ipx/f_webp,q_75,fit_cover,s_80x80/https://axon.me/services/api/file-service/hcpfile/a433ce25-439d-4041-8052-ff108a24dde4/thumbnail/80x80.png",
+    "imageSourcePageUrl": "https://axon.me/hcps/117848-azade-yousefnejad/"
+  },
+  {
+    "id": "tehran-hashemi",
+    "imageSourceUrl": "https://storage.darmankade.com/public.temp/images/doctor/-6765552176639094059_thumb.webp",
+    "imageSourcePageUrl": "https://www.darmankade.com/doctor/427619/"
+  },
+  {
+    "id": "tehran-vahidi",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/3568280?p=thumb",
+    "imageSourcePageUrl": "https://patient.p24cloud.ir/dr/دکتر-شیوا-وحیدی/"
+  },
+  {
+    "id": "tehran-mohit",
+    "imageSourceUrl": "https://www.darooha.com/api/v1/public/media/141257",
+    "imageSourcePageUrl": "https://www.darooha.com/doctors/mitra-mohit"
+  },
+  {
+    "id": "tehran-amini-moghaddam",
+    "imageSourceUrl": "https://draminimoghaddam.github.io/pictures/Dr_Aminimoghaddam.JPG",
+    "imageSourcePageUrl": "https://draminimoghaddam.github.io/"
+  }
+]

@@ -1,0 +1,23 @@
+# Requests shamsaz.onrender.com; Render determines availability.
+# Use a separate Neon Free PostgreSQL project.
+services:
+  - type: web
+    name: shamsaz
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run typecheck && npm run build
+    startCommand: npm run directory:restore && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_ORIGIN
+        sync: false
+      - key: ENABLE_DEMO_SEED
+        value: "false"
+      - key: ENABLE_DEV_AUTH_INBOX
+        value: "false"

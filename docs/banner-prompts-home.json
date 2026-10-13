@@ -1,0 +1,6 @@
+{
+  "mode": "built-in image_gen",
+  "asset": "public/assets/banners/home.png",
+  "deliveryAsset": "public/assets/banners/home.jpg",
+  "prompt": "Use case: ads-marketing. Asset type: wide website hero banner background for Shamsaz, a Persian women's cancer care web application. Create a sophisticated editorial photographic scene of a compassionate Iranian/Middle Eastern woman physician in a white coat with a teal headscarf, talking with a middle-aged Iranian woman patient in a modest warm beige outfit and headscarf, in a bright contemporary women's oncology clinic with frosted glass, subtle plants and premium medical architecture. Calm, hopeful, human connection; professional dignity. Style: believable premium healthcare photography blended with very restrained translucent teal glass arcs, delicate cream and rose sculptural ribbon geometry at the edges, elegant dimensional visual design. Landscape 1536x1024. Composition: subjects clustered in left-center, right third has clean softly lit ivory/teal negative space suitable for RTL website text added in HTML; keep faces unobstructed and naturally proportioned. Soft daylight, restrained jade/teal, warm ivory and rose palette. No text, no letters, no logos, no watermark, no visible patient records, no gore, no medical efficacy claims. This is a fictional promotional scene, no real known physician likeness."
+}

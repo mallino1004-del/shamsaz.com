@@ -1,0 +1,12 @@
+node_modules/
+.npm-cache/
+.local/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+*.dump
+*.sql.backup
+.env*
+!.env.example

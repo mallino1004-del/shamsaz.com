@@ -1,0 +1,47 @@
+{
+  "generationMode": "built-in-image_gen",
+  "assets": [
+    {
+      "id": "login",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: A woman holding a smartphone sitting in a bright clinic lounge, relaxed welcome, sunlight and pale upholstered seating.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/login.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-3ac8b217-6f0a-4281-ba52-ae3506687f62.png"
+    },
+    {
+      "id": "register",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: A young adult woman registering at a clinic reception desk with a female healthcare professional holding a blank-screen tablet, welcoming first visit.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/register.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-89262ace-4901-4dc0-9de9-2012755266f2.png"
+    },
+    {
+      "id": "recovery",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: A woman calmly accessing a smartphone in a cozy private clinical lounge, subtle translucent mint glass abstract key shapes at bottom left suggesting secure account recovery.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/recovery.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-9a00ad70-955b-4bdc-a7c7-b917a0e48f0e.png"
+    },
+    {
+      "id": "profile",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: An Iranian woman patient reviewing a blank tablet beside a female nurse in an intimate softly lit clinic room, attentive collaborative healthcare portrait.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/profile.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-9764e262-88b0-4888-bae8-a182ed42658a.png"
+    },
+    {
+      "id": "patient-dashboard",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: A middle-aged woman and supportive female clinician carefully reviewing a care schedule on a completely blank tablet, hopeful gentle expression in a clinic consultation room.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/patient-dashboard.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-8c6159fa-8489-4665-b639-6c96313aecca.png"
+    },
+    {
+      "id": "doctor-dashboard",
+      "prompt": "Create a premium editorial photographic website banner for Shamsaz Iranian women's healthcare platform. Landscape image 1536x1024. Fictional Iranian adult women in modest clothing and headscarves, natural warm photography, realistic anatomy, refined clinic interiors, jade teal ivory and muted rose palette. Restrained translucent teal glass sculptural ribbons at foreground margins. Place people and meaningful action entirely LEFT and CENTER; RIGHT THIRD is clean pale ivory/teal softly lit negative space reserved for later RTL HTML headings. No text, letters, numbers, logos, watermarks, UI typography, private medical information, charts, claims. Natural dignified expressions, realistic professional quality. Theme: A female oncologist wearing white coat and teal headscarf working at a clinical workstation, natural detailed clinic, over-shoulder composition with blank monitor and thoughtful professional posture.",
+      "mode": "built-in",
+      "filePath": "public/assets/banners/doctor-dashboard.png",
+      "sourcePath": "C:\\Users\\hekmat\\.codex\\generated_images\\01a134a7-0f21-7323-89d6-240b4d49ef9d\\exec-4f758d0a-96c3-4185-a979-4b4e5a5290b8.png"
+    }
+  ]
+}

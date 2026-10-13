@@ -1,0 +1,130 @@
+[
+  {
+    "id": "tehran-moetamedinasab",
+    "displayName": "دکتر مریم معتمدی نسب",
+    "address": "بلوار آیت‌الله کاشانی، بین مهران و بهنام",
+    "phone": "09131563230",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-مریم-زارعی-2/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/2973299?p=thumb"
+  },
+  {
+    "id": "tehran-vakili",
+    "displayName": "دکتر سید محمد وکیلی",
+    "address": "خیابان ولیعصر، بالاتر از میرداماد، کلینیک فوق تخصصی ولیعصر، طبقه دوم",
+    "phone": "02188770022",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-مهساسادات-میری-0/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/4843422?p=thumb"
+  },
+  {
+    "id": "tehran-ghahghaei",
+    "displayName": "دکتر اکرم قهقائی نظام‌آبادی",
+    "address": "تهرانپارس، بلوار خوشوقت، نبش ۱۶۲ غربی، جنب بانک شهر، پلاک ۱، ساختمان صدر، طبقه سوم، واحد ۹",
+    "phone": "02177704044",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-اکرم-قهقایی-نظام-آبادی-4/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/650448?p=thumb"
+  },
+  {
+    "id": "tehran-bazazi",
+    "displayName": "دکتر صبا بزازی",
+    "address": "خیابان مدنی، بیمارستان امام حسین",
+    "phone": "",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-صبا-بزازی-1/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/21419278?p=thumb"
+  },
+  {
+    "id": "tehran-shima-mohammadian",
+    "displayName": "دکتر شیما محمدیان",
+    "address": "جمالزاده شمالی، خیابان نصرت، پلاک ۱۴۰، واحد ۲",
+    "phone": "09127985380",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-شیماء-محمدیان/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/3268345?p=thumb"
+  },
+  {
+    "id": "tehran-ghaemmaghami",
+    "displayName": "دکتر فاطمه قائم مقامی نوری",
+    "address": "ولیعصر، خیابان زرتشت غربی، روبه‌روی بیمارستان مهر، پلاک ۵۵، طبقه دوم",
+    "phone": "02188966510",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-فاطمه-قائم-مقامی-نوری-0/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/3130374?p=thumb"
+  },
+  {
+    "id": "tehran-tehranian",
+    "displayName": "دکتر افسانه طهرانیان",
+    "address": "خیابان ولیعصر، نرسیده به بزرگراه نیایش، کوچه بابک بهرامی، پلاک ۸۱، طبقه ۱، واحد ۱",
+    "phone": "",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر--افسانه-طهرانیان/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/4100804?p=thumb"
+  },
+  {
+    "id": "tehran-behtash",
+    "displayName": "دکتر نادره بهتاش",
+    "address": "شهرک غرب، خیابان ایران زمین شمالی، روبه‌روی فرهنگسرای ابن سینا، بیمارستان بهمن",
+    "phone": "02143019",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-نادره-بهتاش/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/3617681?p=thumb"
+  },
+  {
+    "id": "tehran-amini-moghaddam",
+    "displayName": "دکتر سهیلا امینی مقدم",
+    "address": "شریعتی، تقاطع پل صدر، کوچه سیمیاری، پلاک ۷۴",
+    "phone": "02122211688",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-سهیلا-امینی-مقدم-0/",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-moradpanah",
+    "displayName": "دکتر سمیه مرادپناه",
+    "address": "خیابان کارگر شمالی، سه‌راه جلال آل احمد، بیمارستان شریعتی",
+    "phone": "",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر-سمیه-مرادپناه-32/",
+    "imageSourceUrl": "https://pic.paziresh24.com/api/image/1132583?p=thumb"
+  },
+  {
+    "id": "tehran-hashemi",
+    "displayName": "دکتر سیده راضیه هاشمی",
+    "address": "اتوبان همت غربی، خیابان کبیری طامه، خیابان بهار، بیمارستان عرفان نیایش",
+    "phone": "02149796001",
+    "sourceUrl": "https://patient.p24cloud.ir/dr/دکتر--سیده-راضیه-هاشمی/",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-mohammadian-amiri",
+    "displayName": "دکتر مهدیس محمدیان امیری",
+    "address": "خیابان مولوی، بیمارستان شهید اکبرآبادی",
+    "phone": "",
+    "sourceUrl": "https://axon.me/hcps/93411-mahdis-mohammadian-amiri/",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-mousavi",
+    "displayName": "دکتر اعظم السادات موسوی",
+    "address": "قائم‌مقام فراهانی، کوچه شهدا، پلاک ۲۵",
+    "phone": "02188712495",
+    "sourceUrl": "https://axon.me/hcps/22420-azam-al-sadat-mousavi/",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-mohit",
+    "displayName": "دکتر میترا محیط",
+    "address": "سعادت‌آباد، میدان کاج، ابتدای سرو شرقی، مجتمع پایدار، واحد ۱۰۴",
+    "phone": "",
+    "sourceUrl": "https://www.darooha.com/doctors/mitra-mohit",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-vahidi",
+    "displayName": "دکتر شیوا وحیدی",
+    "address": "قائم‌مقام فراهانی، جنب بیمارستان تهران کلینیک، کوچه شهدا، پلاک ۹، ساختمان ۲۰، واحد ۱۵",
+    "phone": "02188703996",
+    "sourceUrl": "https://zibalife.ir/doctors-search/20817/شیوا-وحیدی",
+    "imageSourceUrl": null
+  },
+  {
+    "id": "tehran-yousefnejad",
+    "displayName": "دکتر آزاده یوسف‌نژاد",
+    "address": "خیابان کارگر شمالی، سه‌راه جلال آل احمد، بیمارستان شریعتی",
+    "phone": "02184901000",
+    "sourceUrl": "https://axon.me/hcps/117848-azade-yousefnejad/",
+    "imageSourceUrl": null
+  }
+]

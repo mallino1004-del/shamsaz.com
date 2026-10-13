@@ -1,0 +1,117 @@
+import 'dotenv/config';
+import { Pool } from 'pg';
+import { chromium } from 'playwright-core';
+import { randomBytes } from 'node:crypto';
+import { spawn, execFileSync } from 'node:child_process';
+import { createServer } from 'node:net';
+import { existsSync, mkdirSync } from 'node:fs';
+import assert from 'node:assert/strict';
+
+const source = new URL(process.env.DATABASE_URL || '');
+if (!['localhost','127.0.0.1','[::1]'].includes(source.hostname)) throw new Error('Browser QA requires the local PostgreSQL development server.');
+const databaseName = `shamsaz_test_${randomBytes(10).toString('hex')}`;
+if (!/^shamsaz_test_[a-f0-9]{20}$/.test(databaseName)) throw new Error('Invalid test database');
+const admin = new Pool({connectionString:source.toString()});
+const target = new URL(source); target.pathname = `/${databaseName}`;
+const portServer=createServer(); await new Promise(resolve=>portServer.listen(0,'127.0.0.1',resolve));
+const port=portServer.address().port; await new Promise(resolve=>portServer.close(resolve));
+const base=`http://localhost:${port}`;
+const executablePath = process.env.AUTH_TEST_BROWSER || ['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
+if (!executablePath) throw new Error('Set AUTH_TEST_BROWSER to a locally installed Chromium browser.');
+let created=false, service, browser;
+const runtimeErrors=[];
+try {
+  execFileSync(process.execPath,['node_modules/vite/bin/vite.js','build'],{stdio:'inherit',windowsHide:true});
+  await admin.query(`CREATE DATABASE "${databaseName}"`); created=true;
+  const qaEnvironment={...process.env,NODE_ENV:'test',PORT:String(port),DATABASE_URL:target.toString(),DISABLE_HMR:'true',ENABLE_DEMO_SEED:'true',DEMO_PASSWORD:randomBytes(24).toString('hex'),APP_ORIGIN:base,ENABLE_DEV_AUTH_INBOX:'true'};
+  execFileSync(process.execPath,['--input-type=module','-e',"const {initializeDatabase,db}=await import('./server/db/index.ts');await initializeDatabase();await db.end();"],{env:qaEnvironment,windowsHide:true,stdio:'pipe'});
+  service=spawn(process.execPath,['scripts/ui-server.ts'],{windowsHide:true,stdio:['ignore','pipe','pipe'],env:{...qaEnvironment,ENABLE_DEMO_SEED:'false'}});
+  service.stdout.resume();service.stderr.resume();
+  let serviceError;service.on('error',error=>{serviceError=error;});
+  let ready=false;
+  for(let attempt=0;attempt<100;attempt++) {
+    if(serviceError) throw serviceError;
+    if(await fetch(`${base}/api/health`).then(response=>response.ok).catch(()=>false)){ready=true;break;}
+    await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  if(!ready) throw new Error('Isolated QA server did not start');
+  browser=await chromium.launch({headless:true,executablePath,timeout:20000});
+  const context=await browser.newContext({viewport:{width:1366,height:900},timezoneId:'Asia/Tehran'});
+  const page=await context.newPage();page.on('pageerror',error=>runtimeErrors.push(error.message));
+  await page.goto(`${base}/#login`);
+  await page.locator('[name="identifier"]').waitFor();
+  mkdirSync('.local/ui-qa',{recursive:true});
+  await page.screenshot({path:'.local/ui-qa/login-desktop.png',fullPage:true});
+  for(const width of [320,360,768,1366]) {
+    await page.setViewportSize({width,height:900});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Auth page overflow at ${width}`);
+    assert.equal(await page.evaluate(()=>document.querySelector('header').scrollWidth>innerWidth),false,`Header overflow at ${width}`);
+    if(width===360) assert.ok((await page.locator('[name="identifier"]').boundingBox()).y<800,'Mobile form must appear before the fold');
+  }
+  await page.setViewportSize({width:1366,height:900});
+  await page.getByRole('button',{name:'ثبت‌نام',exact:true}).click();
+  await page.waitForURL('**/#register');
+  await page.screenshot({path:'.local/ui-qa/register-desktop.png',fullPage:true});
+  await page.getByRole('button',{name:'ادامه',exact:true}).click();
+  await page.locator('[name="firstName"]').fill('آزمایش');
+  await page.locator('[name="lastName"]').fill('مرورگر');
+  await page.locator('[name="nationalId"]').fill('9876543210');
+  await page.getByRole('combobox',{name:'سال تولد'}).selectOption('1370');
+  await page.getByRole('combobox',{name:'ماه تولد'}).selectOption('1');
+  await page.getByRole('combobox',{name:'روز تولد'}).selectOption('15');
+  await page.locator('[name="phone"]').fill('09123450001');
+  await page.getByRole('button',{name:'ادامه',exact:true}).click();
+  const email='browser-auth@example.test',password='Shamsaz-UI-Test-2026!';
+  await page.locator('[name="email"]').fill(email);
+  await page.locator('[name="password"]').fill(password);
+  await page.locator('[name="passwordConfirmation"]').fill('Wrong-password-2026!');
+  await page.getByRole('button',{name:'ساخت حساب شمساز',exact:true}).click();
+  await page.getByText('تکرار رمز عبور مطابقت ندارد.',{exact:true}).waitFor();
+  await page.getByText('برای ثبت‌نام، موافقت شما لازم است.',{exact:true}).waitFor();
+  await page.locator('[name="passwordConfirmation"]').fill(password);
+  await page.getByRole('checkbox').check();
+  await page.getByRole('button',{name:'ساخت حساب شمساز',exact:true}).click();
+  await page.waitForURL('**/#dashboard');
+  const profile=await page.evaluate(async()=>await(await fetch('/api/profile')).json());
+  assert.equal(profile.profile.birthDate,'1991-04-04');
+  assert.equal(profile.profile.firstName,'آزمایش');
+  await page.getByRole('button',{name:'نوبت‌ها',exact:true}).click();
+  await page.waitForURL('**/#appointments');
+  await page.locator('[name="doctorId"]').waitFor();
+  await page.reload();await page.locator('[name="doctorId"]').waitFor();
+  await page.getByRole('button',{name:'خروج از حساب',exact:true}).click();
+  await page.waitForURL('**/#home');
+  await page.goto(`${base}/#login`);
+  await page.locator('[name="identifier"]').fill('۰۹۱۲۳۴۵۰۰۰۱');
+  await page.locator('[name="password"]').fill('Wrong-password-2026!');
+  await page.locator('form button[type="submit"]').click();
+  await page.getByRole('alert').waitFor();
+  assert.equal(await page.locator('[name="identifier"]').count(),1);
+  await page.locator('[name="password"]').fill(password);
+  await page.locator('form button[type="submit"]').click();
+  await page.waitForURL('**/#dashboard');
+  await page.getByRole('button',{name:'خروج از حساب',exact:true}).click();await page.waitForURL('**/#home');
+  await page.goto(`${base}/#forgot-password`);
+  await page.locator('[name="email"]').fill(email);
+  await page.locator('form button[type="submit"]').click();
+  await page.getByRole('link',{name:'باز کردن فرم تغییر رمز (آزمایش محلی)',exact:true}).click();
+  await page.waitForURL(/#reset-password\?token=/);
+  const newPassword='Shamsaz-New-UI-Test-2026!';
+  await page.locator('[name="password"]').fill(newPassword);
+  await page.locator('[name="passwordConfirmation"]').fill(newPassword);
+  await page.locator('form button[type="submit"]').click();
+  await page.getByRole('heading',{name:'رمز عبور تغییر کرد',exact:true}).waitFor();
+  await page.getByRole('button',{name:'ورود به حساب',exact:true}).click();
+  await page.waitForURL('**/#login');
+  await page.locator('[name="identifier"]').fill(email);
+  await page.locator('[name="password"]').fill(newPassword);
+  await page.locator('form button[type="submit"]').click();
+  await page.waitForURL('**/#dashboard');
+  assert.deepEqual(runtimeErrors,[]);
+  console.log('Browser QA passed: registration, Persian birth date, validation, phone login, session refresh, password recovery, route tabs and 320/360/768/1366 layouts.');
+} finally {
+  await browser?.close();
+  if(service && service.exitCode===null) { service.kill(); await new Promise(resolve=>service.once('exit',resolve)); }
+  if(created) await admin.query(`DROP DATABASE "${databaseName}" WITH (FORCE)`);
+  await admin.end();
+}

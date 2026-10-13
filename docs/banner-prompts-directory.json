@@ -1,0 +1,59 @@
+{
+  "mode": "built-in",
+  "assets": [
+    {
+      "id": "doctors",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/doctors.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: Two fictional Iranian female physicians in modest white coats and simple headscarves, one seated and one standing, having a collegial clinical discussion in a bright elegant clinic with a soft teal glass divider.",
+      "inspected": true
+    },
+    {
+      "id": "centers",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/centers.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: A majestic bright modern hospital atrium with sculptural architecture and a reception desk, two fictional Iranian women reception staff in modest uniforms and headscarves welcoming a fully clothed woman patient.",
+      "inspected": true
+    },
+    {
+      "id": "education",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/education.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: A fictional Iranian woman physician in a modest white coat and simple headscarf teaching a fully clothed woman patient using a completely blank tablet at a table beside an elegant medical library.",
+      "inspected": true
+    },
+    {
+      "id": "appointments",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/appointments.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: A fictional Iranian woman patient in modest clothing and headscarf talking with a female receptionist at a sophisticated clinic reception desk; restrained abstract calendar-shaped glass squares with no numbers or text.",
+      "inspected": true
+    },
+    {
+      "id": "screening",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/screening.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: A fictional Iranian female radiographer in modest uniform and headscarf reassuring a fully clothed woman patient beside realistic mammography equipment in a bright welcoming imaging room. No examination in progress, no nudity.",
+      "inspected": true
+    },
+    {
+      "id": "tumor-board",
+      "mode": "built-in image_gen",
+      "intent": "generate",
+      "outputPath": "public/assets/banners/tumor-board.png",
+      "dimensions": "1536x1024",
+      "prompt": "Use case: ads-marketing. Asset type: premium healthcare website page hero banner for Shamsaz. Create a sophisticated photorealistic editorial healthcare scene, landscape 1536x1024. Composition: all people and identifiable scene details clustered on the LEFT and center-left, people visible from waist up where appropriate, right THIRD quiet pale ivory negative space for later HTML right-to-left text. Main subjects must remain within center vertical band for panoramic crop. Palette: restrained teal, jade, warm ivory, blush rose; polished soft daylight and realistic skin texture, warm compassionate professionalism. Tasteful subtle translucent teal glass arcs and an elegant blush ribbon curve at edges, avoid busy graphics. All people fictional, Iranian/Middle Eastern appearance. No baked text, no letters, numbers, logos, watermarks, no readable screens, no personal health information, no clinical claims. Scene: A fictional multidisciplinary team of Iranian women and men medical specialists around a conference table, women in modest white coats with headscarves, a clinical display showing purely abstract shapes with no readable data or patient information.",
+      "inspected": true
+    }
+  ]
+}
