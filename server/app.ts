@@ -49,7 +49,9 @@ export function createApp() {
       if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {
         const origin = req.get("origin");
         const expected =
-          process.env.APP_ORIGIN || `${req.protocol}://${req.get("host")}`;
+          process.env.APP_ORIGIN ||
+          process.env.RENDER_EXTERNAL_URL ||
+          `${req.protocol}://${req.get("host")}`;
         if (origin && origin !== expected)
           throw new ApiError(403, "ORIGIN_REJECTED", "مبدأ درخواست مجاز نیست.");
         if (req.get("sec-fetch-site") === "cross-site")

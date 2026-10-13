@@ -83,7 +83,7 @@ npm run build
 npm start
 ```
 
-`npm start` از فایل‌های ساخته‌شدهٔ `dist` استفاده می‌کند و Vite توسعه را اجرا نمی‌کند. در production باید `ENABLE_DEMO_SEED=false`، `DATABASE_URL` امن و `APP_ORIGIN` مطابق دامنهٔ HTTPS تنظیم شوند. نشست production به cookie امن نیاز دارد. مهاجرت‌ها هنگام شروع هم اجرا می‌شوند؛ در استقرار واقعی، اجرای migration را با نقش جداگانه و قبل از شروع برنامه مدیریت کنید.
+`npm start` از فایل‌های ساخته‌شدهٔ `dist` استفاده می‌کند و Vite توسعه را اجرا نمی‌کند. در production باید `ENABLE_DEMO_SEED=false` و `DATABASE_URL` امن تنظیم شوند. روی Render آدرس HTTPS از `RENDER_EXTERNAL_URL` به‌صورت خودکار دریافت می‌شود؛ برای دامنهٔ اختصاصی، `APP_ORIGIN` را برابر آدرس HTTPS همان دامنه قرار دهید. نشست production به cookie امن نیاز دارد. مهاجرت‌ها هنگام شروع هم اجرا می‌شوند؛ در استقرار واقعی، اجرای migration را با نقش جداگانه و قبل از شروع برنامه مدیریت کنید.
 
 برای ایجاد اولین مدیر مرکز در دیتابیس خالی، متغیرهای `BOOTSTRAP_ADMIN_EMAIL`، `BOOTSTRAP_ADMIN_PASSWORD`، `BOOTSTRAP_ADMIN_NAME` و `BOOTSTRAP_ORGANIZATION_NAME` را در محیط امن تنظیم و `npm run db:bootstrap-admin` را اجرا کنید. این ابزار نقش یا رمز حساب موجود را تغییر نمی‌دهد و اطلاعات ورود را چاپ نمی‌کند. حساب ناظر ملی از این ابزار ساخته نمی‌شود.
 

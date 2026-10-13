@@ -26,7 +26,8 @@ try {
     NODE_ENV: "production",
     DATABASE_URL: target.toString(),
     PORT: String(port),
-    APP_ORIGIN: "https://deployment-check.example",
+    APP_ORIGIN: "",
+    RENDER_EXTERNAL_URL: "https://deployment-check.example",
     ENABLE_DEMO_SEED: "false",
     ENABLE_DEV_AUTH_INBOX: "false",
     DEMO_PASSWORD: "",
@@ -102,7 +103,7 @@ try {
   assert.equal(wrongOrigin.status, 403);
   const registration = await fetch(base + "/api/auth/register", {
     method: "POST",
-    headers: { "content-type": "application/json", origin: env.APP_ORIGIN },
+    headers: { "content-type": "application/json", origin: env.RENDER_EXTERNAL_URL },
     body: JSON.stringify({
       email: "production-check@example.test",
       password: randomBytes(20).toString("hex"),

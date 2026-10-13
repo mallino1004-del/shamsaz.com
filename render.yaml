@@ -15,8 +15,6 @@ services:
         value: production
       - key: DATABASE_URL
         sync: false
-      - key: APP_ORIGIN
-        sync: false
       - key: ENABLE_DEMO_SEED
         value: "false"
       - key: ENABLE_DEV_AUTH_INBOX
